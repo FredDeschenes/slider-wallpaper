@@ -1,0 +1,27 @@
+{
+  "tasks": {
+    "set-wallpaper": "deno run -P --env-file main.ts",
+    "build-executable": "deno compile -P --env-file --output dist/earth_wallpaper.exe main.ts"
+  },
+  "permissions": {
+    "default": {
+      "env": true,
+      "ffi": true,
+      "read": true,
+      "write": true,
+      "net": {
+        "allow": ["*.colostate.edu:443"]
+      }
+    }
+  },
+  "imports": {
+    "@std/cli": "jsr:@std/cli@^1.0.31",
+    "@std/fs": "jsr:@std/fs@^1.0.24",
+    "dayjs": "npm:dayjs@^1.11.21",
+    "sharp": "npm:sharp@^0.35.3",
+    "suncalc": "npm:suncalc@^2.0.0"
+  },
+  "fmt": {
+    "include": ["main.ts", "src/", "README.md"]
+  }
+}
