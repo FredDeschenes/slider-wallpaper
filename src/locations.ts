@@ -309,7 +309,7 @@ const goes19Locations: Location[] = [
     name: "mexico",
     satellite: "goes-19",
     latitude: 24.0,
-    longitude: -116.0,
+    longitude: -96.0,
     cropRegion: {
       left: 1720,
       top: 2195,
