@@ -37,7 +37,7 @@ const flags = parseArgs(Deno.args, {
     "cached-image-max-age",
     "image-max-age",
   ],
-  boolean: ["list-locations", "save-tiled", "verbose", "help"],
+  boolean: ["list-locations", "save-tiled", "verbose", "help", "print-latest-times"],
   default: {
     "cached-image-max-age": "2",
     "image-max-age": "2",
@@ -66,6 +66,7 @@ if (flags.help) {
   console.log(
     "  --save-tiled             Also save the merged full size image (by default only the cropped zones are saved to save space)",
   );
+  console.log("  --print-latest-times     Prints the latest available image time for all satellites");
   console.log(
     "  --verbose                Display log messages to show progress",
   );
@@ -89,6 +90,16 @@ if (flags["list-locations"]) {
     console.log(
       `${satellite}: ${locations.map((location) => location.name).join(", ")}`,
     );
+  }
+
+  Deno.exit();
+}
+
+if (flags["print-latest-times"]) {
+  for (const satellite of satellites) {
+    const latest = await getLatestTime(imageDirectory, satellite, sector, product);
+
+    console.log(`${satellite}: ${latest.toISOString()}`);
   }
 
   Deno.exit();
