@@ -79,6 +79,7 @@ Usage:
   --list-locations         List available locations
   --save-tiled             Also save the merged full size image
                            By default only the cropped zones are saved to save space
+  --print-latest-times     Prints the latest available image time for all satellites
   --verbose                Display log messages to show progress
   --help                   Show this help message
 ```
