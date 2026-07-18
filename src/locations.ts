@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
-import { Region } from "sharp";
 import * as suncalc from "suncalc";
 import { wallpaperHeight, wallpaperWidth } from "./constants.ts";
+import { Region } from "./imageUtils.ts";
 import { Satellite } from "./slider.ts";
 
 export interface Location {

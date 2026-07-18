@@ -1,20 +1,32 @@
-import sharp, { Region, SharpInput } from "sharp";
+import Vips from "wasm-vips";
 
-export function mergeImages(images: SharpInput[], numTiles: number) {
-  return sharp(images, {
-    join: {
-      across: numTiles,
-      background: "#000",
-      halign: "centre",
-      valign: "centre",
-    },
+export interface Region {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
+export function mergeImages(
+  vips: typeof Vips,
+  images: Vips.ArrayImage,
+  numTiles: number,
+) {
+  return vips.Image.arrayjoin(images, {
+    across: numTiles,
+    shim: 0,
+    background: [0, 0, 0],
   });
 }
 
 export function cropImage(
-  mainImage: SharpInput,
+  mainImage: Vips.Image,
   cropRegion: Region,
 ) {
-  return sharp(mainImage)
-    .extract(cropRegion);
+  return mainImage.crop(
+    cropRegion.left,
+    cropRegion.top,
+    cropRegion.width,
+    cropRegion.height,
+  );
 }

@@ -18,8 +18,8 @@ Currently supports downloading images from the following satellites:
 - Himawari-9
 - Meteosat-12
 
-Uses the awesome [sharp](https://github.com/lovell/sharp) image library to
-merge/crop the downloaded images.
+Uses the awesome [wasm-vips](https://github.com/kleisauke/wasm-vips) image
+library to merge/crop the downloaded images.
 
 SLIDER is the
 [Satellite Loop Interactive Data Explorer in Real-time](https://www.satelliteconferences.noaa.gov/2017/doc/poster/94.pdf).
