@@ -2,7 +2,7 @@ import { parseArgs } from "@std/cli/parse-args";
 import { existsSync } from "@std/fs/exists";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc.js";
-import sharp from "sharp";
+import Vips from "wasm-vips";
 import { cleanupOldFiles } from "./src/cleanup.ts";
 import { cropImage, mergeImages } from "./src/imageUtils.ts";
 import {
@@ -24,6 +24,8 @@ import {
 import { setWallpaper } from "./src/wallpaper.ts";
 
 dayjs.extend(utc);
+
+const vips = await Vips();
 
 const sector: Sector = "full_disk";
 const product: Product = "geocolor";
@@ -231,10 +233,14 @@ if (!existsSync(locationImagePath)) {
     console.log("All tiles downloaded, creating tiled image.");
   }
 
-  const mergedImage = await mergeImages(images, numTiles).png().toBuffer();
+  const mergedImage = mergeImages(
+    vips,
+    images.map((image) => vips.Image.newFromBuffer(image)),
+    numTiles,
+  );
 
   if (flags["save-tiled"]) {
-    await sharp(mergedImage).toFile(`${sourceDir}/${sector}.png`);
+    mergedImage.writeToFile(`${sourceDir}/${sector}.png`);
   }
 
   if (flags.verbose) {
@@ -242,10 +248,12 @@ if (!existsSync(locationImagePath)) {
   }
 
   for (const location of locationsBySatellite[satellite]) {
-    const _croppedImage = await cropImage(
+    const croppedImage = cropImage(
       mergedImage,
       location.cropRegion,
-    ).jpeg().toFile(`${sourceDir}/${location.name}.jpg`);
+    );
+
+    croppedImage.writeToFile(`${sourceDir}/${location.name}.jpg`);
   }
 }
 

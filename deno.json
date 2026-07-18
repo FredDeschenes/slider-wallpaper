@@ -8,6 +8,7 @@
       "env": true,
       "ffi": true,
       "read": true,
+      "sys": true,
       "write": true,
       "net": {
         "allow": ["*.colostate.edu:443"]
@@ -18,8 +19,8 @@
     "@std/cli": "jsr:@std/cli@^1.0.31",
     "@std/fs": "jsr:@std/fs@^1.0.24",
     "dayjs": "npm:dayjs@^1.11.21",
-    "sharp": "npm:sharp@^0.35.3",
-    "suncalc": "npm:suncalc@^2.0.0"
+    "suncalc": "npm:suncalc@^2.0.0",
+    "wasm-vips": "npm:wasm-vips@^0.0.18"
   },
   "fmt": {
     "include": ["main.ts", "src/", "README.md"]
