@@ -38,6 +38,7 @@ const flags = parseArgs(Deno.args, {
     "image-directory",
     "cached-image-max-age",
     "image-max-age",
+    "jpg-save-quality",
   ],
   boolean: [
     "list-locations",
@@ -49,6 +50,7 @@ const flags = parseArgs(Deno.args, {
   default: {
     "cached-image-max-age": "2",
     "image-max-age": "2",
+    "jpg-save-quality": "95",
   },
 });
 
@@ -78,6 +80,9 @@ if (flags.help) {
     "  --print-latest-times     Prints the latest available image time for all satellites",
   );
   console.log(
+    "  --jpg-save-quality       The quality to save the wallpapers at (default: 95)",
+  );
+  console.log(
     "  --verbose                Display log messages to show progress",
   );
   console.log("  --help                   Show this help message");
@@ -87,6 +92,7 @@ if (flags.help) {
 
 const imageMaxAge = Number.parseInt(flags["image-max-age"]);
 const cachedImageMaxAge = Number.parseInt(flags["cached-image-max-age"]);
+const jpgSaveQuality = Number.parseInt(flags["jpg-save-quality"]);
 
 const imageDirectory = flags["image-directory"] ||
   Deno.env.get("IMAGE_DIRECTORY") || ".data";
@@ -253,7 +259,9 @@ if (!existsSync(locationImagePath)) {
       location.cropRegion,
     );
 
-    croppedImage.writeToFile(`${sourceDir}/${location.name}.jpg`);
+    croppedImage.writeToFile(`${sourceDir}/${location.name}.jpg`, {
+      Q: jpgSaveQuality,
+    });
   }
 }
 
