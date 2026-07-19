@@ -80,6 +80,7 @@ Usage:
   --save-tiled             Also save the merged full size image
                            By default only the cropped zones are saved to save space
   --print-latest-times     Prints the latest available image time for all satellites
+  --jpg-save-quality       The quality to save the wallpapers at (default: 95)"
   --verbose                Display log messages to show progress
   --help                   Show this help message
 ```
